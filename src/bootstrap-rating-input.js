@@ -1,133 +1,50 @@
-(function ($) {
-
-  $.fn.rating = function () {
-
-    var element;
-
-    // A private function to highlight a star corresponding to a given value
-    function _paintValue(ratingInput, value) {
-      var selectedStar = $(ratingInput).find('[data-value=' + value + ']');
-      selectedStar.removeClass('glyphicon-star-empty').addClass('glyphicon-star');
-      selectedStar.prevAll('[data-value]').removeClass('glyphicon-star-empty').addClass('glyphicon-star');
-      selectedStar.nextAll('[data-value]').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-    }
-
-    // A private function to remove the selected rating
-    function _clearValue(ratingInput) {
-      var self = $(ratingInput);
-      self.find('[data-value]').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-      self.find('.rating-clear').hide();
-      var input = self.find('input');
-      input.val(input.data('empty-value')).trigger('change');
-    }
-
-    // Iterate and transform all selected inputs
-    for (element = this.length - 1; element >= 0; element--) {
-
-      var el, i,
-        originalInput = $(this[element]),
-        max = originalInput.data('max') || 5,
-        min = originalInput.data('min') || 0,
-        emptyValue = originalInput.data('empty-value'),
-        clearable = originalInput.data('clearable') || null,
-        stars = '';
-
-      // HTML element construction
-      for (i = min; i <= max; i++) {
-        // Create <max> empty stars
-        stars += ['<span class="glyphicon glyphicon-star-empty" data-value="', i, '"></span>'].join('');
-      }
-      // Add a clear link if clearable option is set
-      if (clearable) {
-        stars += [
-          ' <a class="rating-clear" style="display:none;" href="javascript:void">',
-          '<span class="glyphicon glyphicon-remove"></span> ',
-          clearable,
-          '</a>'].join('');
-      }
-
-      el = [
-        // Rating widget is wrapped inside a div
-        '<div class="rating-input">',
-        stars,
-        // Value will be hold in a hidden input with same name and id than original input so the form will still work
-        '<input type="hidden" name="',
-        originalInput.attr('name'),
-        '" value="',
-        originalInput.val(),
-        '" id="',
-        originalInput.attr('id'),
-        '" data-min="',
-        min,
-        '" data-max="',
-        max,
-        '" data-empty-value="',
-        emptyValue,
-        '" />',
-        '</div>'].join('');
-
-      // Replace original inputs HTML with the new one
-      originalInput.replaceWith(el);
-
-    }
-
-    // Give live to the newly generated widgets
-    $('.rating-input')
-      // Highlight stars on hovering
-      .on('mouseenter', '[data-value]', function () {
-        var self = $(this);
-        _paintValue(self.closest('.rating-input'), self.data('value'));
-      })
-      // View current value while mouse is out
-      .on('mouseleave', '[data-value]', function () {
-        var self = $(this),
-          input = self.siblings('input'),
-          val = input.val(),
-          min = input.data('min'),
-          max = input.data('max');
-        if (val >= min && val <= max) {
-          _paintValue(self.closest('.rating-input'), val);
-        } else {
-          _clearValue(self.closest('.rating-input'));
-        }
-      })
-      // Set the selected value to the hidden field
-      .on('click', '[data-value]', function (e) {
-        var self = $(this);
-        var val = self.data('value');
-        self.siblings('input').val(val).trigger('change');
-        self.siblings('.rating-clear').show();
-        e.preventDefault();
-        return false;
-      })
-      // Remove value on clear
-      .on('click', '.rating-clear', function (e) {
-        _clearValue($(this).closest('.rating-input'));
-        e.preventDefault();
-        return false;
-      })
-      // Initialize view with default value
-      .each(function () {
-        var input = $(this).find('input'),
-          val = input.val(),
-          min = input.data('min'),
-          max = input.data('max');
-        if (val >= min && val <= max) {
-          _paintValue(this, val);
-          $(this).find('.rating-clear').show();
-        }
-        else {
-          _clearValue(this);
-        }
-      });
-
-  };
-
-  // Auto apply conversion of number fields with class 'rating' into rating-fields
-  $(function () {
-    if ($('input.rating[type=number]').length > 0) {
-      $('input.rating[type=number]').rating();
-    }
-  });
-
-}(jQuery));
+!function(a) {
+	a.fn.rating = function() {
+		function b(b, c) {
+			var d = a(b).find("[data-value=" + c + "]");
+			d.removeClass("rating-inactive").addClass("rating-active"), d.prevAll("[data-value]").removeClass("rating-inactive").addClass("rating-active"), d.nextAll("[data-value]").removeClass("rating-active").addClass("rating-inactive")
+		}
+		function c(b) {
+			var c = a(b);
+			c.find("[data-value]").removeClass("rating-active").addClass("rating-inactive"), c.find(".rating-clear").hide();
+			var d = c.find("input");
+			d.val(d.data("empty-value")).trigger("change")
+		}
+		var d;
+		for (d = this.length - 1; d >= 0; d--) {
+			var e, f, g = a(this[d]),
+				h = g.data("max") || 5,
+				i = g.data("min") || 0,
+				j = g.data("empty-value"),
+				k = g.data("clearable") || null,
+				l = "";
+			for (f = i; h >= f; f++) l += ['<span class="glyphicon glyphicon-star rating-inactive" data-value="', f, '"></span>'].join("");
+			k && (l += [' <a class="rating-clear" style="display:none;" href="javascript:void">', '<span class="glyphicon glyphicon-remove"></span> ', k, "</a>"].join("")), e = ['<div class="rating-input">', l, '<input type="hidden" name="', g.attr("name"), '" value="', g.val(), '" id="', g.attr("id"), '" data-min="', i, '" data-max="', h, '" data-empty-value="', j, '" />', "</div>"].join(""), g.replaceWith(e)
+		}
+		a(".rating-input").on("mouseenter", "[data-value]", function() {
+			var c = a(this);
+			b(c.closest(".rating-input"), c.data("value"))
+		}).on("mouseleave", "[data-value]", function() {
+			var d = a(this),
+				e = d.siblings("input"),
+				f = e.val(),
+				g = e.data("min"),
+				h = e.data("max");
+			f >= g && h >= f ? b(d.closest(".rating-input"), f) : c(d.closest(".rating-input"))
+		}).on("click", "[data-value]", function(b) {
+			var c = a(this),
+				d = c.data("value");
+			return c.siblings("input").val(d).trigger("change"), c.siblings(".rating-clear").show(), b.preventDefault(), !1
+		}).on("click", ".rating-clear", function(b) {
+			return c(a(this).closest(".rating-input")), b.preventDefault(), !1
+		}).each(function() {
+			var d = a(this).find("input"),
+				e = d.val(),
+				f = d.data("min"),
+				g = d.data("max");
+			e >= f && g >= e ? (b(this, e), a(this).find(".rating-clear").show()) : c(this)
+		})
+	}, a(function() {
+		a("input.rating[type=number]").length > 0 && a("input.rating[type=number]").rating()
+	})
+}(jQuery);

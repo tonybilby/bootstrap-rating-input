@@ -1,40 +1,32 @@
-# Bootstrap Rating Input in 2Kb
+# Bootstrap Rating Input in 2Kb *with solid stars
 
-This is another plugin that eases the generation of rating stars for jQuery and Bootstrap.
+This is modified version of ![javiertoledo's bootstrap-rating-input](https://github.com/javiertoledo/bootstrap-rating-input). the change I've made is force the stars to stay solid and use a few tiny lines of css to color them however I like. My reason for doing this is mostly aesthetics, I hate hollow stars, but also I found that when styling the span element ith padding the hollow star doesn't like to align perfectly with the solid ones, this fixes that.
 
 It generates widgets like this:
 
 ![Rating example](http://curso-rails-mini-blog.s3.amazonaws.com/rating.png)
 
-## But, why another damn rating plugin???
+## How to use
 
-After searching for existing widgets, I found three categories of them:
+Just download `build/bootstrap-rating-input.min.js` & 'build/style.css', put them wherever you usually put JavaScripts and css in your project and include it on pages where you want to have forms with ratings:
 
-  - The ones that depends on PNG images.
-  - The ones that adds A LOT of JavaScript and CSS code to my project.
-  - The ones that adds A LOT of JavaScript and CSS code and depends on PNG images.
+		<script src="path/to/javascripts/bootstrap-rating-input.min.js" type="text/javascript"></script>
+		<link href="path/to/stylesheets/style.css" rel="stylesheet">
+	
+You can edit the color of the stars with the following css
 
-I don't want to add a whole multipurpose library just to put a few stars in my interface, I want my rating stars to look awesome in retina screens without worrying about image versions and dynamically replacing them, and Bootstrap already includes a set of beautifully designed vectorial icons by Glyphicons, so I thought I could create something simpler.
-
-## Ok, enough talking, tell me how this thing works!
-
-If you're using bower to manage your frontend dependencies you can install this plugin by just issuing this command:
-
-    bower install bootstrap-rating-input --save
-
-Else you can just download `build/bootstrap-rating-input.min.js`, put it wherever you usually put JavaScripts in your project and include it on pages where you want to have forms with ratings:
-
-    <script src="path/to/javascripts/bootstrap-rating-input.min.js" type="text/javascript"></script>
+		.rating-active{
+			color: #ffca02 !important; /* Yellow by default */
+		}
+		.rating-inactive{
+			color: #000000 !important; /* Black by default */
+		}
 
 Now add a input of type *number* to your forms and add the class `rating` to it:
 
     <input type="number" name="your_awesome_parameter" id="some_id" class="rating" />
 
 That's all! When page loads, you'll find a few stars where you'd expect to find the input. It works just like most of rating plugins, but you don't need to learn anything about options or initializations, it just works out of the box.
-
-### Wait, where has my input gone?
-
-The plugin replaces your number input by a hidden field with identical name and id and adds interactive stars that will catch your clicks and save the selected values into the hidden field. In this way the form can be submitted or value readed by jQuery normally.
 
 ### Nice, but I want to use a different number of stars
 
@@ -66,30 +58,4 @@ The `rating` class is used in combination with `input[type=number]` to let you a
 
 ## Requirements
 
-You know... [Twitter Bootstrap](http://getbootstrap.com) and [jQuery](http://jquery.com)!
-
-## Can I generate read-only stars for displaying?
-
-If you think about it you don't want to use a plugin to generate static HTML code that is as simple as this:
-
-    <i class='glyphicon glyphicon-star'></i><i class='glyphicon glyphicon-star'></i><i class='glyphicon glyphicon-star'></i><i class='glyphicon glyphicon-star-empty'></i><i class='glyphicon glyphicon-star-empty'></i>
-
-You can easily generate such code with your favourite template engine and a loop. With Ruby and HAML it could look like this:
-
-    / Given a variable val with the value you want to represent and a variable max that contains the maximum number of stars:
-    - max.times do |i|
-      %i{class: "glyphicon glyphicon-star#{'-empty' if i>val}"}
-
-Well, HAML is awesome, but you are a programmer, so you'll be able to addapt this to your favorite language...
-
-## It looks nice, but I want to complain because it doesn't fit my favorite use case
-
-I have implemented this for my project in my environment and sharing it for free. Leave me an issue with your suggestions and I'll eventually push a fix, but this is MIT licensed, so you're welcome to fork this project, do pull requests with fixes and improvements, reimplement better versions of it for your own or do whatever you want, I'll be happy if it becomes useful or inspires at least one more person.
-
-## Ok, I want to contribute
-
-Nice! You're awesome, fork the project, and do whatever changes you want into `src/bootstrap-rating-input.js`. If you're kind enough I'll appreciate that you maintain the minified version updated and to ease this step I've automated minification with grunt, so if you have npm installed you can issue following command to update the minified version:
-
-    $ npm install && grunt
-
-Thanks!!
+[Twitter Bootstrap](http://getbootstrap.com) and [jQuery](http://jquery.com)!
