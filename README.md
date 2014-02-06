@@ -1,10 +1,10 @@
 # Bootstrap Rating Input in 2Kb *with solid stars
 
-This is modified version of ![javiertoledo's bootstrap-rating-input](https://github.com/javiertoledo/bootstrap-rating-input). the change I've made is force the stars to stay solid and use a few tiny lines of css to color them however I like. My reason for doing this is mostly aesthetics, I hate hollow stars, but also I found that when styling the span element ith padding the hollow star doesn't like to align perfectly with the solid ones, this fixes that.
+This is modified version of [javiertoledo's bootstrap-rating-input](https://github.com/javiertoledo/bootstrap-rating-input) . the change I've made is force the stars to stay solid and use a few tiny lines of css to color them however I like. My reason for doing this is mostly aesthetics, I hate hollow stars, but also I found that when styling the span element ith padding the hollow star doesn't like to align perfectly with the solid ones, this fixes that.
 
 It generates widgets like this:
 
-![Rating example](http://curso-rails-mini-blog.s3.amazonaws.com/rating.png)
+![Rating example](https://github.com/tonybilby/bootstrap-rating-input/blob/master/stars.png?raw=true)
 
 ## How to use
 
